@@ -6,7 +6,6 @@ response = requests.get("https://arxiv.org/search/?query=reinforcement+learning&
 papers = response.text
 rl = BeautifulSoup(papers, "html.parser")
 rl_papers = rl.find_all("p", {"class": "title is-5 mathjax"})
-# a = rl_papers[0].find("p", {"class": "title is-5 mathjax"})
 titles_list = [paper.get_text().strip() for paper in rl_papers]
 
 # Save titles to a text file (one title per line)
