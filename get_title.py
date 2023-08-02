@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import time
 
 
 response = requests.get("https://arxiv.org/search/?query=reinforcement+learning&searchtype=all&source=header")
@@ -13,6 +14,14 @@ with open("rl_titles.txt", "w", encoding="utf-8") as file:
     for title in titles_list:
         file.write(title + "\n")
 
-# Print the titles to the console
-for title in titles_list:
-    print(title)
+def get_new_titles(titles_list):
+    with open("rl_titles.txt", "r", encoding="utf-8") as file:
+        old_titles = file.read().splitlines()
+    new_titles = [title for title in titles_list if title not in old_titles]
+    return new_titles
+
+while True:
+    time.sleep(60)
+
+    new_titles = get_new_titles(titles_list)
+    print(new_titles)
